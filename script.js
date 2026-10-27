@@ -1,5 +1,38 @@
-const donateButton = document.getElementById("donateButton");
+const menuToggle = document.getElementById("menuToggle");
+const mainNav = document.getElementById("mainNav");
 
-donateButton.addEventListener("click", function () {
-    alert("Thank you for supporting our mission!");
+if (menuToggle && mainNav) {
+menuToggle.addEventListener("click", () => {
+const isOpen = mainNav.classList.toggle("open");
+
+menuToggle.setAttribute("aria-expanded", String(isOpen));
+menuToggle.setAttribute(
+  "aria-label",
+  isOpen ? "Close navigation" : "Open navigation"
+);
+
 });
+
+mainNav.querySelectorAll("a").forEach((link) => {
+link.addEventListener("click", () => {
+mainNav.classList.remove("open");
+menuToggle.setAttribute("aria-expanded", "false");
+menuToggle.setAttribute("aria-label", "Open navigation");
+});
+});
+
+document.addEventListener("keydown", (event) => {
+if (event.key === "Escape") {
+mainNav.classList.remove("open");
+menuToggle.setAttribute("aria-expanded", "false");
+menuToggle.setAttribute("aria-label", "Open navigation");
+menuToggle.focus();
+}
+});
+}
+
+const yearElement = document.getElementById("currentYear");
+
+if (yearElement) {
+yearElement.textContent = new Date().getFullYear();
+}
